@@ -24,6 +24,9 @@ app.use(express.json({ limit: "50mb", extended: false }));
 app.use(express.urlencoded({ limit: "50mb", extended: true }));
 
 // Routes
+app.get('/', (req, res)=>{
+  res.json({message: "hello py-visual..."});
+});
 app.use("/api/users", userRoutes);
 app.use("/api/admins", adminRoutes);
 app.use("/api/types", typeRoutes);
