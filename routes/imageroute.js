@@ -1,8 +1,8 @@
 const express = require('express');
-const { createImage, getAllImages, deleteImage } = require('../controllers/imagecontroller');
+const { createImage, getAllImages, deleteImage, uploadImage} = require('../controllers/imagecontroller');
 const router = express.Router();
 
-router.post('/', createImage);
+router.post('/', uploadImage , createImage);
 router.get('/', getAllImages);
 router.delete('/:id', deleteImage);
 

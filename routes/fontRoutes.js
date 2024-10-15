@@ -12,3 +12,4 @@ router.get("/", fontController.getFonts);
 router.delete("/:id", fontController.deleteFont);
 
 module.exports = router;
+
