@@ -10,6 +10,7 @@ const textRoutes = require("./routes/textroute");
 const imageRoutes = require("./routes/imageroute");
 const buttonimageRoutes = require("./routes/buttonimageroute");
 const inputfieldRoute = require("./routes/inputfieldroute");
+const fontRoute = require("./routes/fontRoutes");
 const app = express();
 const path = require("path");
 const upload = require("./utility/uploadImage");
@@ -35,7 +36,7 @@ app.use("/api/texts", textRoutes);
 app.use("/api/images", imageRoutes);
 app.use("/api/buttonImages", buttonimageRoutes);
 app.use("/api/inputfields", inputfieldRoute);
-
+app.use("/api/fonts", fontRoute);
 
 
 
