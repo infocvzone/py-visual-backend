@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const inputFieldSchema = new mongoose.Schema({
   id: {
     type: Number,
-    required: true, // ID of the canvas where the input field is located (optional if you need to track it)
+    default: Date.now(), // ID of the canvas where the input field is located (optional if you need to track it)
   },
   type: {
     type: String,
@@ -70,9 +70,39 @@ const inputFieldSchema = new mongoose.Schema({
     type: String,
     default: "sans-serif", // Font family of the text in the input field
   },
+  input_type: {
+    type: String,
+    default: "text",
+  },
+  default_text: {
+    type: String,
+    default: "",
+  },
+  padding_left: {
+    type: Number,
+    default: 5,
+  },
+  padding_right: {
+    type: Number,
+    default: 5,
+  },
+  padding_top: {
+    type: Number,
+    default: 5,
+  },
+  padding_bottom: {
+    type: Number,
+    default: 5,
+  },
+  border_style: {
+    type: [String],
+    default: ["bottom", "top", "right", "left"],
+  },
+  on_input: {
+    type: String,
+    default: null,
+  },
 });
-
-
 
 const InputField = mongoose.model("InputField", inputFieldSchema);
 
