@@ -12,11 +12,11 @@ const inputFieldSchema = new mongoose.Schema({
   },
   x: {
     type: Number,
-    required: true, // The X coordinate of the input field
+    default:150, // The X coordinate of the input field
   },
   y: {
     type: Number,
-    required: true, // The Y coordinate of the input field
+    default: 150, // The Y coordinate of the input field
   },
   width: {
     type: Number,
@@ -68,7 +68,7 @@ const inputFieldSchema = new mongoose.Schema({
   },
   fontFamily: {
     type: String,
-    default: "sans-serif", // Font family of the text in the input field
+    default: "Roboto-Bold", // Font family of the text in the input field
   },
   input_type: {
     type: String,
