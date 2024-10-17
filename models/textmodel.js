@@ -2,19 +2,19 @@ const mongoose = require("mongoose");
 
 const textSchema = new mongoose.Schema(
   {
-    id: { type: Number, required: true },
+    id: { type: Number, default: Date.now() },
     type: { type: String, default: "Text" },
 
     // Positioning
-    x: { type: Number, required: true },
-    y: { type: Number, required: true },
+    x: { type: Number, default: 150 },
+    y: { type: Number, default: 150 },
 
     // Text content and styling
-    text: { type: String, default: "Hello", required: true },
+    text: { type: String, default: "Text" },
     scale: { type: Number, default: 1.0 },
     fontPath: { type: String, default: null },
     fontSize: { type: Number, default: 20 },
-    fontFamily: { type: String, default: "Roboto" },
+    fontFamily: { type: String, default: "Roboto-Bold" },
 
     // Styling options
     color: { type: String, default: "#000000" },
