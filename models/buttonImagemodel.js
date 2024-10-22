@@ -4,6 +4,7 @@ const buttonImageSchema = new mongoose.Schema(
   {
     id: { type: Number, default: Date.now() },
     type: { type: String, default: "ButtonImage" },
+    Name: {type: String, default: "ButtonImage"},
     x: { type: Number, default: 150 },
     y: { type: Number, default: 150 },
     idleImage: { type: String, required: true },

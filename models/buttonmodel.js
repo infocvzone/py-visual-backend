@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const buttonSchema = new mongoose.Schema({
   id: { type: Number, default: Date.now() },
   type: { type: String, default: 'BasicButton' },
+  name:{type: String, default: "Button"},
   x: { type: Number, default:150 },
   y: { type: Number, default:150 },
   width: { type: Number, default: 140 },
