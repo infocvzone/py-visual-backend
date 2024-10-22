@@ -6,11 +6,14 @@ const userRoutes = require("./routes/userroute");
 const adminRoutes = require("./routes/adminroute");
 const typeRoutes = require("./routes/typeroute");
 const buttonRoutes = require("./routes/buttonroute");
+const lineRoutes = require("./routes/lineroutes");
+const circleRoutes = require("./routes/circleroutes");
 const textRoutes = require("./routes/textroute");
 const imageRoutes = require("./routes/imageroute");
 const buttonimageRoutes = require("./routes/buttonimageroute");
 const inputfieldRoute = require("./routes/inputfieldroute");
 const fontRoute = require("./routes/fontRoutes");
+const rectRoutes = require("./routes/rectRouts");
 const app = express();
 const path = require("path");
 const upload = require("./utility/uploadImage");
@@ -25,20 +28,21 @@ app.use(express.json({ limit: "50mb", extended: false }));
 app.use(express.urlencoded({ limit: "50mb", extended: true }));
 
 // Routes
-app.get('/', (req, res)=>{
-  res.json({message: "hello py-visual..."});
+app.get("/", (req, res) => {
+  res.json({ message: "hello py-visual..." });
 });
 app.use("/api/users", userRoutes);
 app.use("/api/admins", adminRoutes);
 app.use("/api/types", typeRoutes);
 app.use("/api/buttons", buttonRoutes);
+app.use("/api/line", lineRoutes);
 app.use("/api/texts", textRoutes);
 app.use("/api/images", imageRoutes);
 app.use("/api/buttonImages", buttonimageRoutes);
 app.use("/api/inputfields", inputfieldRoute);
 app.use("/api/fonts", fontRoute);
-
-
+app.use("/api/circle", circleRoutes);
+app.use("/api/rect", rectRoutes);
 
 /*
 //image upload and get routes abc
