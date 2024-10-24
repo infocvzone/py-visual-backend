@@ -93,7 +93,6 @@ exports.getFonts = async (req, res) => {
 exports.deleteFont = async (req, res) => {
   try {
     const font = await Font.findById(req.params.id);
-
     if (!font) {
       return res.status(404).json({ error: "Font not found." });
     }
@@ -103,7 +102,7 @@ exports.deleteFont = async (req, res) => {
     )[1]; // Extract file key from the URL
 
     const deleteParams = {
-      Bucket: "your-space-name", // Replace with your space name
+      Bucket: "py-visual-spaces", // Replace with your space name
       Key: key,
     };
 
@@ -113,5 +112,16 @@ exports.deleteFont = async (req, res) => {
     res.status(204).send();
   } catch (error) {
     res.status(500).json({ error: error.message });
+  }
+};
+
+// Update Button
+exports.updateFont = async (req, res) => {
+  try {
+    const button = await Font.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    if (!button) return res.status(404).json({ message: 'Font not found' });
+    res.status(200).json(button);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
   }
 };
