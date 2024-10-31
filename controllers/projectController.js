@@ -3,13 +3,13 @@ const Project = require("../models/projectsmodel");
 
 // Create or Update Project
 exports.createProject = async (req, res) => {
-  const { name, user, color, bgImage, elements, positions } = req.body;
+  const { name, user, color, bgImage, width, height, elements, positions } = req.body;
 
   try {
     // Check if a project with the same name exists for this user
     const project = await Project.findOneAndUpdate(
       { name, user }, // filter: project with the same name for the specific user
-      { name, user, color, bgImage, elements, positions }, // data to update or insert
+      { name, user, color, bgImage, width, height, elements, positions }, // data to update or insert
       { new: true, upsert: true, setDefaultsOnInsert: true } // options to create if doesn't exist
     );
 

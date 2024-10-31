@@ -24,6 +24,14 @@ const ProjectSchema = new Schema({
     type: Schema.Types.Mixed,
     default: "",
   },
+  width:{
+    type: Number,
+    default:700
+  },
+  height:{
+    type: Number,
+    default:400
+  },
   elements: {
     type: Schema.Types.Mixed, // Allows any data type
   },
