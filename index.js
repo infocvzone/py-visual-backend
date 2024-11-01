@@ -15,6 +15,7 @@ const inputfieldRoute = require("./routes/inputfieldroute");
 const fontRoute = require("./routes/fontRoutes");
 const rectRoutes = require("./routes/rectRouts");
 const projectsRoute = require('./routes/projectRoutes');
+const ImagesRoutes = require("./routes/ImagesRouter");
 const app = express();
 const path = require("path");
 const upload = require("./utility/uploadImage");
@@ -45,6 +46,8 @@ app.use("/api/fonts", fontRoute);
 app.use("/api/circle", circleRoutes);
 app.use("/api/rect", rectRoutes);
 app.use('/api/projects', projectsRoute);
+app.use('/api/picture', ImagesRoutes);
+
 
 /*
 //image upload and get routes abc
