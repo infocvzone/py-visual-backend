@@ -3,10 +3,10 @@ const mongoose = require("mongoose");
 const RectSchema = new mongoose.Schema(
   {
     id: { type: Number, default: Date.now() },
-    type: { type: String, default: "Circle" },
-    variableName: { type: String, default: "Line" },
+    type: { type: String, default: "Rect" },
+    variableName: { type: String, default: "Rect" },
     tag: { type: String, default: null },
-    name: { type: String, default: "Circle" },
+    name: { type: String, default: "Rect" },
     x: { type: Number, default: 100 },
     y: { type: Number, default: 100 },
     Color: { type: String, default: "#0f0f0f" },

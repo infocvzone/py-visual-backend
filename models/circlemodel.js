@@ -4,7 +4,7 @@ const circleSchema = new mongoose.Schema(
   {
     id: { type: Number, default: Date.now() },
     type: { type: String, default: "Circle" },
-    variableName: { type: String, default: "Line" },
+    variableName: { type: String, default: "Circle" },
     tag: { type: String, default: null },
     name: { type: String, default: "Circle" },
     x: { type: Number, default: 100 },
