@@ -5,6 +5,8 @@ const imagesSchema = new mongoose.Schema(
   {
     type: { type: String, default: "Image" },
     id: { type: Number, default: Date.now() },
+    variableName: { type: String, default: "Image" },
+    name: { type: String, default: null},
     x: { type: Number, default: 100 },
     y: { type: Number, default: 100 },
     url: { type: String, required: true },

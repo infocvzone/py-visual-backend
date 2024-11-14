@@ -10,6 +10,14 @@ const inputFieldSchema = new mongoose.Schema({
     type: String,
     default: "InputField",
   },
+  variableName: {
+    type: String,
+    default: "InputField",
+  },
+  name: {
+    type: String,
+    default: null,
+  },
   x: {
     type: Number,
     default:150, // The X coordinate of the input field

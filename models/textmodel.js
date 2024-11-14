@@ -4,6 +4,8 @@ const textSchema = new mongoose.Schema(
   {
     id: { type: Number, default: Date.now() },
     type: { type: String, default: "Text" },
+    variableName: { type: String, default: "Text" },
+    name: { type: String, default: null },
 
     // Positioning
     x: { type: Number, default: 150 },
