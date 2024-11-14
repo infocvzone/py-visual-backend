@@ -4,6 +4,8 @@ const lineSchema = new mongoose.Schema(
   {
     id: { type: Number, default: Date.now() },
     type: { type: String, default: "Line" },
+    variableName: { type: String, default: "Line" },
+    tag: { type: String, default: null },
     name: { type: String, default: "Line" },
     x1: { type: Number, default: 100 },
     y1: { type: Number, default: 100 },

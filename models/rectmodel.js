@@ -4,6 +4,8 @@ const RectSchema = new mongoose.Schema(
   {
     id: { type: Number, default: Date.now() },
     type: { type: String, default: "Circle" },
+    variableName: { type: String, default: "Line" },
+    tag: { type: String, default: null },
     name: { type: String, default: "Circle" },
     x: { type: Number, default: 100 },
     y: { type: Number, default: 100 },
