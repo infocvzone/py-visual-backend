@@ -1,4 +1,4 @@
-const Icon = require("../models/iconmodel");
+const Shape = require("../models/shapesmodel");
 
 // Create Button
 exports.createButton = async (req, res) => {
@@ -10,7 +10,7 @@ exports.createButton = async (req, res) => {
     }
     const savedIcons = [];
     for (const svgData of svgs) {
-      const newIcon = new Icon(svgData);
+      const newIcon = new Shape(svgData);
       const savedIcon = await newIcon.save();
       savedIcons.push(savedIcon);
     }
@@ -26,7 +26,7 @@ exports.createButton = async (req, res) => {
 // Get All Buttons
 exports.getAllButtons = async (req, res) => {
   try {
-    const buttons = await Icon.find();
+    const buttons = await Shape.find();
     res.status(200).json(buttons);
   } catch (err) {
     res.status(400).json({ error: err.message });
@@ -36,7 +36,7 @@ exports.getAllButtons = async (req, res) => {
 // Get Button by ID
 exports.getButtonById = async (req, res) => {
   try {
-    const button = await Icon.findById(req.params.id);
+    const button = await Shape.findById(req.params.id);
     if (!button) return res.status(404).json({ message: "Button not found" });
     res.status(200).json(button);
   } catch (err) {
@@ -47,7 +47,7 @@ exports.getButtonById = async (req, res) => {
 // Update Button
 exports.updateButton = async (req, res) => {
   try {
-    const button = await Icon.findByIdAndUpdate(req.params.id, req.body, {
+    const button = await Shape.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
     });
     if (!button) return res.status(404).json({ message: "Button not found" });
@@ -60,7 +60,7 @@ exports.updateButton = async (req, res) => {
 // Delete Button
 exports.deleteButton = async (req, res) => {
   try {
-    await Icon.findByIdAndDelete(req.params.id);
+    await Shape.findByIdAndDelete(req.params.id);
     res.status(200).json({ message: "Button deleted successfully" });
   } catch (err) {
     res.status(400).json({ error: err.message });
