@@ -32,60 +32,76 @@ const upload = multer({
   }),
 });
 
-// Middleware for single image upload (expects 'imageFile' field)
-exports.uploadImage = upload.single("imageFile");
+// Middleware for multiple image uploads (expects 'imageFiles' field)
+exports.uploadImages = upload.array("imageFiles", 5);
 
-// Create Image Controller
+// Middleware for multiple SVG uploads
+exports.uploadSVGs = (req, res, next) => {
+  const { svgs } = req.body;
+  if (!svgs || !Array.isArray(svgs)) {
+    return res.status(400).json({ error: "Invalid or missing SVG data." });
+  }
+  req.svgs = svgs;
+  next();
+};
+
 exports.createImageGraphics = async (req, res) => {
-  const { name, tags, type } = req.body;
+  const { name, tags } = req.body;
 
-  if (!req.file) {
-    return res.status(400).json({ error: "No image file uploaded." });
+  if (!req.files || req.files.length === 0) {
+    return res.status(400).json({ error: "No image files uploaded." });
   }
 
-  const filePath = path.join(__dirname, `../uploads/${req.file.filename}`);
-  const fileKey = `fixedAssets/Graphics/${req.file.filename}`;
-
   try {
-    // Read the uploaded file
-    const fileStream = await fs.readFile(filePath);
+    const uploadedImages = await Promise.all(
+      req.files.map(async (file) => {
+        const filePath = path.join(__dirname, `../uploads/${file.filename}`);
+        const fileKey = `fixedAssets/Graphics/${file.filename}`;
 
-    // Upload to DigitalOcean Spaces
-    const uploadParams = {
-      Bucket: "py-visual-spaces",
-      Key: fileKey,
-      Body: fileStream,
-      ACL: "public-read",
-      ContentType: req.file.mimetype,
-    };
+        // Read the uploaded file
+        const fileStream = await fs.readFile(filePath);
 
-    await s3.send(new PutObjectCommand(uploadParams));
+        // Upload to DigitalOcean Spaces
+        const uploadParams = {
+          Bucket: "py-visual-spaces",
+          Key: fileKey,
+          Body: fileStream,
+          ACL: "public-read",
+          ContentType: file.mimetype,
+        };
 
-    const imageUrl = `https://py-visual-spaces.blr1.digitaloceanspaces.com/${fileKey}`;
+        await s3.send(new PutObjectCommand(uploadParams));
+
+        // Generate public URL
+        const imageUrl = `https://py-visual-spaces.blr1.digitaloceanspaces.com/${fileKey}`;
+
+        // Remove local file after uploading
+        await fs.unlink(filePath);
+
+        return {
+          name: file.originalname.split(".")[0],
+          svg: imageUrl,
+          type: "Image",
+          tags: Array.isArray(tags)
+            ? tags.map((tag) => tag.trim())
+            : tags.split("-").map((tag) => tag.trim()),
+        };
+      })
+    );
 
     // Save metadata to MongoDB
-    const newImage = new Graphics({
-      name,
-      svg: imageUrl,
-      type: "Image",
-      tags: tags.split("-").map((tag) => tag.trim()),
-    });
-
-    await newImage.save();
-
-    // Remove local file after uploading
-    await fs.unlink(filePath);
+    const newImages = await Graphics.insertMany(uploadedImages);
 
     res.status(201).json({
-      message: "Image graphic uploaded successfully.",
-      data: newImage,
+      message: "Images uploaded successfully.",
+      data: newImages,
     });
   } catch (error) {
-    await fs.unlink(filePath).catch(() => {});
-    console.error("Error uploading image graphic:", error);
+    console.error("Error uploading images:", error);
     res.status(500).json({ error: error.message });
   }
 };
+
 
 // Create Button
 exports.createSVGGraphics = async (req, res) => {

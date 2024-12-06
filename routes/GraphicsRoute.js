@@ -4,7 +4,7 @@ const {
   createSVGGraphics,
   createImageGraphics,
   getAllButtons,
-  uploadImage
+  uploadImages
 } = require("../controllers/graphicscontroller");
 
 
@@ -12,7 +12,7 @@ const {
 router.post("/upload-svg", createSVGGraphics);
 
 // Route to handle image upload
-router.post("/upload-image", uploadImage, createImageGraphics);
+router.post("/upload-image", uploadImages, createImageGraphics);
 
 // get all graphics
 router.get("/",getAllButtons);
