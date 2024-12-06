@@ -23,13 +23,41 @@ exports.createButton = async (req, res) => {
   }
 };
 
-// Get All Buttons
+// Get Paginated Buttons (with optional tag filtering)
 exports.getAllButtons = async (req, res) => {
   try {
-    const buttons = await Icon.find();
-    res.status(200).json(buttons);
+    const { page = 0, limit = 20, tag = "" } = req.query;
+
+    // Convert 'page' to an integer and ensure it's at least 0
+    const pageNumber = parseInt(page) >= 0 ? parseInt(page) : 0;
+    const pageLimit = parseInt(limit) > 0 ? parseInt(limit) : 20; // Default to 20 shapes per page
+
+    // Build query for the filter (tags)
+    const query = tag ? { tags: { $in: [tag] } } : {}; // Match shapes containing the tag in their tags array
+
+    // Fetch shapes with pagination and tag filter if provided
+    const shapes = await Icon.find(query)
+      .skip(pageNumber * pageLimit) // Skip shapes based on the page number and limit
+      .limit(pageLimit) // Limit results to the specified page limit
+      .exec(); // Execute the query
+
+    // Count the total number of matching shapes (for pagination metadata)
+    const totalCount = await Icon.countDocuments(query);
+
+    // Calculate total pages based on total count and page limit
+    const totalPages = Math.ceil(totalCount / pageLimit);
+
+    res.status(200).json({
+      data: shapes,
+      pagination: {
+        currentPage: pageNumber,
+        totalPages: totalPages,
+        totalCount: totalCount,
+        pageLimit: pageLimit,
+      },
+    });
   } catch (err) {
-    res.status(400).json({ error: err.message });
+    res.status(500).json({ error: err.message });
   }
 };
 
