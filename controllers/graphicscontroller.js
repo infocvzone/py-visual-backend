@@ -102,7 +102,6 @@ exports.createImageGraphics = async (req, res) => {
   }
 };
 
-
 // Create Button
 exports.createSVGGraphics = async (req, res) => {
   try {
@@ -134,13 +133,42 @@ exports.createSVGGraphics = async (req, res) => {
   }
 };
 
-// Get All Buttons
+// Get Paginated Buttons (with optional tag filtering)
 exports.getAllButtons = async (req, res) => {
-    try {
-      const buttons = await Graphics.find();
-      res.status(200).json(buttons);
-    } catch (err) {
-      res.status(400).json({ error: err.message });
-    }
-  };
-  
+  try {
+    const { page = 0, limit = 30, tag = "" } = req.query;
+
+    console.log(req.query);
+
+    // Convert 'page' to an integer and ensure it's at least 0
+    const pageNumber = parseInt(page) >= 0 ? parseInt(page) : 0;
+    const pageLimit = parseInt(limit) > 0 ? parseInt(limit) : 30; // Default to 20 shapes per page
+
+    // Build query for the filter (tags)
+    const query = tag ? { tags: { $in: [tag] } } : {}; // Match shapes containing the tag in their tags array
+
+    // Fetch shapes with pagination and tag filter if provided
+    const shapes = await Graphics.find(query)
+      .skip(pageNumber * pageLimit) // Skip shapes based on the page number and limit
+      .limit(pageLimit) // Limit results to the specified page limit
+      .exec(); // Execute the query
+
+    // Count the total number of matching shapes (for pagination metadata)
+    const totalCount = await Graphics.countDocuments(query);
+
+    // Calculate total pages based on total count and page limit
+    const totalPages = Math.ceil(totalCount / pageLimit);
+    console.log(shapes);
+    res.status(200).json({
+      data: shapes,
+      pagination: {
+        currentPage: pageNumber,
+        totalPages: totalPages,
+        totalCount: totalCount,
+        pageLimit: pageLimit,
+      },
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
