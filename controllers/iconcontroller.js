@@ -35,8 +35,9 @@ exports.getAllButtons = async (req, res) => {
     // Build query for the filter (tags)
     const query = tag ? { tags: { $in: [tag] } } : {}; // Match shapes containing the tag in their tags array
 
-    // Fetch shapes with pagination and tag filter if provided
+    // Fetch shapes with pagination, tag filter, and sorting (descending)
     const shapes = await Icon.find(query)
+      .sort({ createdAt: -1 }) // Sort by 'createdAt' in descending order (newest first)
       .skip(pageNumber * pageLimit) // Skip shapes based on the page number and limit
       .limit(pageLimit) // Limit results to the specified page limit
       .exec(); // Execute the query
