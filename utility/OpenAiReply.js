@@ -6,6 +6,8 @@ const openai = new OpenAI({
     process.env.OPENAI_API_KEY
 });
 
+
+
 const callOpenAI = async (req, res) => {
   const { prompt, code } = req.body;
 
