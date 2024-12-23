@@ -3,8 +3,7 @@ const { OpenAI } = require("openai");
 
 const openai = new OpenAI({
   apiKey:
-    process.env.OPENAI_API_KEY ||
-    "sk-uEPRKuJOMXHwy724oB7gDBcy8zBqsh8pbkGbT5P-HET3BlbkFJtNu9hwBXptv__d3uKiJ9wDlIs-qY0eQ7fvAfZ8IaEA",
+    process.env.OPENAI_API_KEY
 });
 
 const callOpenAI = async (req, res) => {
