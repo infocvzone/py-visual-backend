@@ -18,6 +18,8 @@ const buttonSchema = new mongoose.Schema(
     clickedColor: { type: String, default: "#d1910f" },
     borderColor: { type: String, default: "#000000" },
     borderThickness: { type: Number, default: 0 },
+    opacity: {type: Number , default: 1},
+    borderRadius: {type : Number, default: 0},
     onClick: { type: String, default: null }, // Store function names or references as strings
     onRelease: { type: String, default: null },
     onHover: { type: String, default: null },
