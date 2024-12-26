@@ -13,8 +13,6 @@ const textSchema = new mongoose.Schema(
 
     // Text content and styling
     text: { type: String, default: "Text" },
-    scale: { type: Number, default: 1.0 },
-    fontPath: { type: String, default: null },
     fontSize: { type: Number, default: 20 },
     fontFamily: { type: String, default: "Roboto-Bold" },
 
@@ -24,6 +22,9 @@ const textSchema = new mongoose.Schema(
     italic: { type: Boolean, default: false },
     underline: { type: Boolean, default: false },
     strikethrough: { type: Boolean, default: false },
+    bgColor: { type: String, default: "rgba(255,255,255,100)" },
+    boxWidth: { type: Number, default: 200 },
+    textAlignment: { type: String, default: "left" },
   },
   { timestamps: true }
 );
