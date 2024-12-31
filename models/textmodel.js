@@ -22,7 +22,7 @@ const textSchema = new mongoose.Schema(
     italic: { type: Boolean, default: false },
     underline: { type: Boolean, default: false },
     strikethrough: { type: Boolean, default: false },
-    bgColor: { type: String, default: "rgba(255,255,255,100)" },
+    bgColor: { type: String, default: "rgba(255,255,255,0)" },
     boxWidth: { type: Number, default: 200 },
     textAlignment: { type: String, default: "left" },
   },
